@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    form {
+      margin-top: 100px;
+      width: 50%;
+    }
+
+    h3 {
+      color: rgb(237, 63, 63);
+      font-weight: 500;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      margin-top: 30px;
+      background: rgb(236, 88, 88);
+      width: 100%;
+      color: #fff;
+      font-size: 20px;
+      padding: 5px;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: rgb(237, 63, 63);
+      border: 1px solid rgb(237, 63, 63);
+    }
+
+    a {
+      text-decoration: none;
+      color: #386cbb;
+    }
+
+    a:hover {
+      color: rgb(237, 63, 63);
+      letter-spacing: 1px;
+    }
+
+    @media screen and (max-width:600px) {
+      form {
+        width: 100%;
+      }
+    }
+  </style>
+  <!-- Page Content -->
+
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center " style="height: 100vh;">
+
+      <form action="{% url 'create' %}" class="p-5 shadow" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3 class="mt-4 mb-4">Create Blog</h3>
+        <label for="" class="form-label">Title</label>
+        <div class="input-group">
+          <input type="text" class="form-control" name="postname" required>
+        </div>
+        <label for="" class="form-label">Content</label>
+        <textarea class="form-control" name="content" required></textarea>
+        <label for="" class="form-label">Category</label>
+        <input type="text" class="form-control" name="category" required>
+        <label for="" class="form-label">Upload Image</label>
+        <input type="file" class="form-control" name="image">
+        <button class="btn">Create Blog</button>
+        <br>
+        {% for message in messages %}
+        <p class="text-danger">{{message}}</p>
+        {% endfor %}
+      </form>
+
+    </div>
+  </div>
+
+  {% endblock %}

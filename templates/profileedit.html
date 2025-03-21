@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <style>
+    form {
+      margin-top: 30px;
+      width: 50%;
+    }
+
+    h5 {
+      color: rgb(237, 63, 63);
+      font-weight: 500;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      margin-top: 30px;
+      background: rgb(236, 88, 88);
+      width: 100%;
+      color: #fff;
+      font-size: 20px;
+      padding: 5px;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: rgb(237, 63, 63);
+      border: 1px solid rgb(237, 63, 63);
+    }
+
+    a {
+      text-decoration: none;
+      color: #386cbb;
+    }
+
+    a:hover {
+      color: rgb(237, 63, 63);
+      letter-spacing: 1px;
+    }
+
+    @media screen and (max-width:600px) {
+      form {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <!-- Page Content -->
+  
+  <div class="d-flex justify-content-center align-items-center " style="height: 100vh;">
+    <form action="{% url 'profileedit' user.id %}" class="p-5 shadow" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h5 class="pb-2">Update Profile</h5>
+  
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="form-control" value="{{ user.username }}" disabled>
+  
+      <label for="firstname" class="form-label">First Name</label>
+      <input type="text" class="form-control" name="firstname" value="{{ user.first_name }}" required>
+  
+      <label for="lastname" class="form-label">Last Name</label>
+      <input type="text" class="form-control" name="lastname" value="{{ user.last_name }}" required>
+  
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" value="{{ user.email }}" required>
+  
+      <label for="phone_number" class="form-label">Phone Number</label>
+      <input type="text" class="form-control" name="phone_number" value="{{ user.phone_number }}" required>
+  
+      <label for="profile_picture" class="form-label">Profile Picture</label>
+      <input type="file" class="form-control" name="profile_picture">
+  
+      <!-- Display profile image -->
+      <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'assets/images/user.png' %}{% endif %}" 
+     class="img-radius mt-3"
+     alt="User-Profile-Image"
+     style="border-radius: 50%; width: 100px; height: 100px;">
+     <!-- Checkbox to delete profile picture -->
+<div class="form-check mt-3">
+  <input class="form-check-input" type="checkbox" name="delete_picture" id="delete_picture">
+  <label class="form-check-label" for="delete_picture">Delete Profile Picture</label>
+</div>
+
+  
+      <button class="btn">Update Profile</button>
+  
+      {% for message in messages %}
+          <p class="text-danger">{{ message }}</p>
+      {% endfor %}
+  </form>
+  
+  </div>
+
+{% endblock %}
